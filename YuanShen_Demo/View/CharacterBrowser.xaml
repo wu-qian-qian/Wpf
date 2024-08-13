@@ -34,6 +34,7 @@
               From="0"  To="1" Duration="0:0:0.35" >
             </DoubleAnimation>
         </Storyboard>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -41,7 +42,7 @@
             <RowDefinition Height="180"/>
         </Grid.RowDefinitions>
         <!--使用trigger监听Loaded，当其被触发开始触发动画的播放-->
-        <MediaElement Volume="0.7" IsMuted="{Binding ElementName=bgm,Path=IsChecked}">
+        <MediaElement Volume="0.7"  IsMuted="{Binding ElementName=bgm,Path=IsChecked}">
             <MediaElement.Triggers>
                 <EventTrigger RoutedEvent="Loaded">
                     <BeginStoryboard>
@@ -87,8 +88,12 @@
                 </Image.Triggers>
             </Image>
         </Grid>
-        <ToggleButton x:Name="bgm" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1" Margin="20"  FocusVisualStyle="{x:Null}"
+            
+        <ToggleButton x:Name="bgm" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1" Margin="20"  FocusVisualStyle="{x:Null}" RenderTransformOrigin="0.5,0.5"
                 Foreground="#9FFF" IsChecked="True" Cursor="Hand">
+            <ToggleButton.RenderTransform>
+                <RotateTransform Angle="0"/>
+            </ToggleButton.RenderTransform>
             <ToggleButton.Effect>
                 <BlurEffect Radius="1"/>
             </ToggleButton.Effect>
@@ -117,7 +122,100 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </ToggleButton.Template>
+            <ToggleButton.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:6" From="0" To="360" RepeatBehavior="Forever"
+                AutoReverse="True"  Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </ToggleButton.Triggers>
         </ToggleButton>
-        <Image Grid.RowSpan="2"/>
+        <!--角色立绘-->
+        <Image Grid.RowSpan="2" Name="protraitPic"
+            d:Source="https://webstatic.mihoyo.com/upload/contentweb/2022/08/19/a15445b2b2e4443398eabf3b479f49e7_8073097535789989508.png"
+        Source="{Binding SelectedItem.ProtraitUrl}"
+            Stretch="UniformToFill">
+            <Image.RenderTransform>
+                <TranslateTransform X="100"/>
+            </Image.RenderTransform>
+        </Image>
+        <!---->
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,160,0,0">
+            <Image d:Source="https://webstatic.mihoyo.com/upload/contentweb/2022/08/15/4f3f7fc8cc5fce975bfff8d552e8e7b8_7543421952558259312.png"
+       Source="{Binding SelectedItem.NameUrl}" Height="120" HorizontalAlignment="Center" Margin="190,0,0,0" Stretch="Uniform"/>
+            <Image  d:Source="https://webstatic.mihoyo.com/upload/contentweb/2022/08/15/b131cb7706e97d71ecf3d4f2965b0ff1_7476946874531800864.png"
+                 Source="{Binding SelectedItem.ElementUrl}" Opacity="0.4" Height="280"  Margin="-130,-80,0,0"/>
+        </Grid>
+        <Image  d:Source="https://webstatic.mihoyo.com/upload/contentweb/2022/08/15/5ec15b13ccdf26bc05e6fdafdf57b0b2_3416441378250207025.png"
+ Source="{Binding SelectedItem.DialogueUrl}" Height="180" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="200,0,0,0"/>
+        
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <StackPanel.Resources>
+                <Style TargetType="RadioButton">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="Margin" Value="0,0.2"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="RadioButton">
+                                <Border x:Name="border"  Width="250" Background="Transparent"  Padding="20,18,0,18">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Grid RenderTransformOrigin="0.5,0.5">
+                                            <Grid.RenderTransform>
+                                                <RotateTransform Angle="50"/>
+                                            </Grid.RenderTransform>
+                                            <Grid.Effect>
+                                                <DropShadowEffect BlurRadius="5" ShadowDepth="0" Color="White" />
+                                            </Grid.Effect>
+                                            <Border Name="uncheckIcon"  HorizontalAlignment="Center" VerticalAlignment="Center"  Height="5" Width="5" Background="White"  BorderThickness="1" BorderBrush="White"/>
+                                            <Grid Visibility="Hidden" x:Name="checkIcon" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Border  Height="12" Width="12"  BorderThickness="1" BorderBrush="White">
+                                                    <Path Fill="{TemplateBinding Foreground}"   Data="M0,0 8,0 8,8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                        </Grid>
+                                        <ContentPresenter x:Name="content" Margin="15,0,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="uncheckIcon" Property="Visibility" Value="Hidden"/>
+                                        <Setter TargetName="checkIcon" Property="Visibility" Value="Visible"/>
+                                        <Setter TargetName="border" Property="Background">
+                                            <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Color="#9000"/>
+                                                    <GradientStop Offset="1" Color="#0000"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter TargetName="content" Property="Margin" Value="25,0,0,0" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </StackPanel.Resources>
+            <RadioButton Content="蒙德城"
+                     IsChecked="True"
+                     Command="{Binding LoadCityCommand}"
+                     CommandParameter="150" />
+            <RadioButton Content="璃月港" Command="{Binding LoadCityCommand}" CommandParameter="151" />
+            <RadioButton Content="稻妻城" Command="{Binding LoadCityCommand}" CommandParameter="324" />
+            <RadioButton Content="须弥城" Command="{Binding LoadCityCommand}" CommandParameter="350" />
+            <RadioButton Content="枫丹廷" Command="{Binding LoadCityCommand}" CommandParameter="358" />
+            <RadioButton Content="敬请期待" IsEnabled="False" />
+        </StackPanel>
+        <ListBox Grid.Row="1" SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding CharList}"
+                 Background="#33f0f8ff">
+            <ListBox.Resources>
+                
+            </ListBox.Resources>
+        </ListBox>
     </Grid>
 </Window>

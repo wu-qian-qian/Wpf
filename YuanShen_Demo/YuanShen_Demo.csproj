@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DemoMvvm\DemoMvvm.csproj" />
+    <ProjectReference Include="..\Extension\Extension.csproj" />
     <ProjectReference Include="..\HttpFactory\Net.csproj" />
     <ProjectReference Include="..\WPF.Tools\WPF.Tools.csproj" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Extension
 {
@@ -14,6 +15,25 @@ namespace Extension
         {
             string josn = JsonConvert.SerializeObject(obj);
             return josn;
+        }
+        /// <summary>
+        /// 将josn序列化成节点型
+        /// </summary>
+        /// <param name="josn"></param>
+        /// <returns></returns>
+        public static JObject GetJosnObject(this string josn)
+        {
+           return JObject.Parse(josn);
+        }
+        /// <summary>
+        /// 获取节型的特定节点
+        /// </summary>
+        /// <param name="josn"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static JToken GetJosnNode(this string josn,string node) 
+        {
+            return JObject.Parse(josn)[node];
         }
     }
 }
