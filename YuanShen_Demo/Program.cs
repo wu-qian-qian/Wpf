@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EventModule.Local;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,9 @@ namespace YuanShen_Demo
         [STAThread]
         private static void Main(string[] args)
         {
-            _ = new App().Run();
+           _ = new App().Run(); 
         }
+   
     }
+
 }

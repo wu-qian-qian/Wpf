@@ -10,7 +10,7 @@ namespace Dependency
             foreach (Assembly assembly in assemblys)
             {
                 //object标识基类，带有该标识将会自动注入或者带有特性标识
-                var types = assembly.GetTypes().Where(p => (!p.IsAbstract && p.IsAssignableFrom(typeof(IDependencyInjection))) || p.GetCustomAttribute<DependencyAttribute>() != null);
+                var types = assembly.GetTypes().Where(p => (!p.IsAbstract && typeof(IDependencyInjection).IsAssignableFrom(p)) || p.GetCustomAttribute<DependencyAttribute>() != null);
                 foreach (var type in types)
                 {
                     //type可以添加规则
