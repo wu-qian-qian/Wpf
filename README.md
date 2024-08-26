@@ -9,17 +9,20 @@
 为tcp的服务端默认支持2中模式并行不阻塞，并行阻塞;
 内部还提供了心跳机制用于检测掉线
 ### TcpClient
-使用了多线程进行服务
-内部提供心跳机制
+使用了多线程进行服务  
+内部提供心跳机制  
 ### SocketBase
-为TcpServer、TcpClient的基类
+为TcpServer、TcpClient的基类  
 ### 提供IToken基类
-如数据数据的接收重写*ExecuteReciveCommand*方法
-数据的发送重写*ExecuteSendCommand*方法
-数据包的消费重写*ExecuteCommand*方法
+如数据数据的接收重写**ExecuteReciveCommand**方法  
+数据的发送重写**ExecuteSendCommand**方法  
+数据包的消费重写**ExecuteCommand**方法  
 ## EventModule 事件模块
-具体使用方式参照内部Dome，模块默认使用的是微软的DI包Microsoft.Extensions.DependencyInjection
+具体使用方式参照内部Dome，模块默认使用的是微软的DI包Microsoft.Extensions.DependencyInjection  
 其中事件模块的执行为并行处理该模块考虑到线程安全的情况执行时添加了执行锁，确保每一次执行为不同消费者
+## Job 模块
+具体参考program.cs文件  
+后续会对job进行扩展或是重写  
 
 
 
